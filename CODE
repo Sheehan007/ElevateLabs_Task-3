@@ -5,12 +5,14 @@ WHERE Continent = 'Asia' AND Year = 2020
 ORDER BY Per_Capita_Sugar_Consumption DESC
 LIMIT 5;
 
+
 /* 2. Using HAVING: Which continents have per capita sugar > 38kg?  */
 SELECT Continent,
        AVG(Per_Capita_Sugar_Consumption) AS avg_pc_kg
 FROM   sugar_data
 GROUP  BY Continent
 HAVING AVG(Per_Capita_Sugar_Consumption) > 38;
+
 
 /* Using INNER JOIN on an agregate sub-query */
 /* #3. Compare every 2020 country with its continent's average */
