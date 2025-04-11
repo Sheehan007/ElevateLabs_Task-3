@@ -1,1 +1,70 @@
-#1. 
+/* 1. Using WHERE: Picking Asian rows for 2020  */
+SELECT *
+FROM sugar_data
+WHERE Continent = 'Asia' AND Year = 2020
+ORDER BY Per_Capita_Sugar_Consumption DESC
+LIMIT 5;
+
+/* 2. Using HAVING: Which continents have per capita sugar > 38kg?  */
+SELECT Continent,
+       AVG(Per_Capita_Sugar_Consumption) AS avg_pc_kg
+FROM   sugar_data
+GROUP  BY Continent
+HAVING AVG(Per_Capita_Sugar_Consumption) > 38;
+
+/* Using INNER JOIN on an agregate sub-query */
+/* #3. Compare every 2020 country with its continent's average */
+WITH cont_avg AS (
+    SELECT Continent,
+           AVG(Per_Capita_Sugar_Consumption) AS avg_pc
+    FROM   sugar_data
+    GROUP  BY Continent
+)
+SELECT s.Country,
+       s.Per_Capita_Sugar_Consumption AS country_pc,
+       c.avg_pc
+FROM   sugar_data AS s
+JOIN   cont_avg  AS c
+       ON s.Continent = c.Continent
+WHERE  s.Year = 2020
+ORDER  BY country_pc DESC
+LIMIT 5;
+
+
+/* 4. Calculating Average Revenue per Person (ARPU)  */
+SELECT SUM(Total_Sugar_Consumption) / SUM(Population) AS avg_kg_per_person
+FROM   sugar_data;
+
+
+/* 5. Correlated sub‑query to find each country’s max yearly sugar intake */
+SELECT Country,
+       Year,
+       Per_Capita_Sugar_Consumption
+FROM   sugar_data AS s
+WHERE  Per_Capita_Sugar_Consumption = (
+         SELECT MAX(Per_Capita_Sugar_Consumption)
+         FROM   sugar_data
+         WHERE  Country = s.Country
+       )
+ORDER  BY Per_Capita_Sugar_Consumption DESC
+LIMIT 5;
+
+
+/* 6. Creating a view from the CSV Table
+CREATE VIEW continent_sugar_stats AS
+SELECT Continent,
+       AVG(Per_Capita_Sugar_Consumption) AS avg_pc,
+       SUM(Total_Sugar_Consumption)      AS total_kg
+FROM   sugar_data
+GROUP  BY Continent;
+
+SELECT * FROM continent_sugar_stats;
+
+
+/* 7. Handling NULL values in SQL  */
+/* How many rows lack Education_Campaign, fill them with 0   */
+SELECT COUNT(*) AS missing_campaign
+FROM   sugar_data
+WHERE  Education_Campaign IS NULL;
+
+
