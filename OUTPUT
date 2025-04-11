@@ -1,0 +1,49 @@
+#1. Using WHERE: Picking Asian ros or 2020
+Country	Year	Per_Capita_Sugar_Consumption
+Japan	  2020	         69.69
+China	  2020	         67.87
+India	  2020	         59.10
+  …	     …	             …
+
+
+#2. Using HAVING: Which continents have per capita sugar > 38kg? 
+Continent	avg_pc_kg
+Asia	      38.04
+
+
+#3. Compare every 2020 country with its continent's average
+Country	 country_pc	 avg_pc
+USA	       69.98	   37.14
+Japan	     69.69	   38.04
+Brazil	   67.99	   36.90
+China	     67.87	   38.04
+
+
+#4. Calculating Average Revenue per Person (ARPU) 
+avg_kg_per_person
+0.0376 kg 
+(37.6 kg of sugar is consumed per person per day according to the dataset)
+
+
+#5. 5. Correlated sub‑query to find each country’s max yearly sugar intake
+Country	Year	Max_Per_Capita_Sugar
+USA	    1976	      74.02
+Japan	  1968	      73.64
+
+
+#6. Creating a view from the CSV Table
+Continent	     avg_pc	total_kg
+Africa	       37.66	   4.42 B
+Asia	         38.04	   19.05 B
+Europe	       37.64	   14.40 B
+North America	 37.14	   8.88 B
+Oceania	       37.52	   5.30 B
+South America	 36.90	   4.45 B
+
+
+#7. Handling NULL values in SQL
+missing_campaign
+520
+
+
+
